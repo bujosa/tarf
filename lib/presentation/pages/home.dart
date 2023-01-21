@@ -16,7 +16,7 @@ class MyHomePage extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           'Word of the Day',
-          style: TextStyle(fontSize: 40),
+          style: TextStyle(fontSize: 40, fontFamily: 'Pacifico'),
         ),
         backgroundColor: Colors.transparent,
         flexibleSpace: Container(
@@ -55,13 +55,17 @@ class MyHomePage extends StatelessWidget {
                 ],
               ),
               child: Image.network(
-                'https://images.pexels.com/photos/2245436/pexels-photo-2245436.png',
+                'https://images.pexels.com/photos/2245436/pexels-photo-2245436.png?auto=compress&cs=tinysrgb&h=350',
                 fit: BoxFit.cover,
               ),
             ),
             const Text(
               'Travel',
-              style: TextStyle(fontSize: 40, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 50,
+                  color: Colors.black,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w400),
             ),
           ],
         ),
