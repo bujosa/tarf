@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import '../widgets/custom/custom_space_content.dart';
+
 class WordContent extends StatelessWidget {
   const WordContent({
     Key? key,
@@ -59,9 +61,7 @@ class WordContent extends StatelessWidget {
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.w400),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
-          ),
+          const CustomSpaceContent(),
           const Text(
               'A dense uncultivated tract of trees and undergrowth, larger than woods.',
               style: TextStyle(
@@ -69,9 +69,7 @@ class WordContent extends StatelessWidget {
                   color: Colors.black,
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w400)),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
-          ),
+          const CustomSpaceContent(),
           Center(
               child: CarouselSlider(
             options: CarouselOptions(
@@ -107,9 +105,7 @@ class WordContent extends StatelessWidget {
               );
             }).toList(),
           )),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
-          ),
+          const CustomSpaceContent(),
           const Text.rich(
             TextSpan(
               text: 'Synonyms: ',
@@ -129,9 +125,7 @@ class WordContent extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
-          ),
+          const CustomSpaceContent(),
           const Text.rich(
             TextSpan(
               text: 'Antonyms: ',
