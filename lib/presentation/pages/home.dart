@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../widgets/app_bar.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -32,19 +33,19 @@ class MyHomePage extends StatelessWidget {
               child: Row(
                 children: [
                   const Text(
-                    'Battle',
+                    'Park',
                     style: TextStyle(
-                        fontSize: 50,
+                        fontSize: 40,
                         color: Colors.black,
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w400),
                   ),
                   IconButton(
-                    iconSize: 50,
+                    iconSize: 40,
                     onPressed: () async {
                       final player = AudioPlayer();
                       player.play(UrlSource(
-                          'https://api.dictionaryapi.dev/media/pronunciations/en/battle-us.mp3'));
+                          'https://api.dictionaryapi.dev/media/pronunciations/en/park-us.mp3'));
                       player.pause();
                     },
                     icon: const Icon(Icons.volume_up, color: Colors.black),
@@ -52,50 +53,59 @@ class MyHomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.7,
-                height: MediaQuery.of(context).size.height * 0.3,
-                margin: const EdgeInsets.symmetric(vertical: 20),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black,
-                      blurRadius: 10,
-                      spreadRadius: 5,
-                    ),
-                  ],
-                ),
-                child: Image.network(
-                  'https://images.pexels.com/photos/339805/pexels-photo-339805.jpeg?auto=compress&cs=tinysrgb&h=350',
-                  fit: BoxFit.cover,
-                ),
-              ),
+            const Text(
+              '[paːk]',
+              style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.grey,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w400),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.01,
             ),
-            const Text.rich(
-              TextSpan(
-                text: 'Meaning: ',
+            const Text(
+                'A dense uncultivated tract of trees and undergrowth, larger than woods.',
                 style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.red,
+                    fontSize: 22,
+                    color: Colors.black,
                     fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.bold),
-                children: <TextSpan>[
-                  TextSpan(
-                      text:
-                          'A war or fight between two or more groups of people',
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w400)),
-                ],
-              ),
+                    fontWeight: FontWeight.w400)),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
             ),
+            Center(
+                child: CarouselSlider(
+              options: CarouselOptions(height: 250.0),
+              items: [
+                "https://images.pexels.com/photos/1645840/pexels-photo-1645840.jpeg?auto=compress&cs=tinysrgb&h=350",
+                "https://images.pexels.com/photos/158028/bellingrath-gardens-alabama-landscape-scenic-158028.jpeg?auto=compress&cs=tinysrgb&h=350",
+                "https://images.pexels.com/photos/1770809/pexels-photo-1770809.jpeg?auto=compress&cs=tinysrgb&h=350"
+              ].map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 5.0, vertical: 5),
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black,
+                              blurRadius: 10,
+                              spreadRadius: 5,
+                            ),
+                          ],
+                        ),
+                        child: Image.network(
+                          i,
+                          fit: BoxFit.cover,
+                        ));
+                  },
+                );
+              }).toList(),
+            )),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.01,
             ),
