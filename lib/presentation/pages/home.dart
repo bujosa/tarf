@@ -1,17 +1,24 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
-import '../widgets/app_bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/bottom_navigation_bar.dart';
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const AppBarWidget(),
+      bottomNavigationBar: const BottomNavigationBarWidget(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: ListView(
@@ -76,7 +83,10 @@ class MyHomePage extends StatelessWidget {
             ),
             Center(
                 child: CarouselSlider(
-              options: CarouselOptions(height: 250.0),
+              options: CarouselOptions(
+                  height: 250.0,
+                  autoPlay: true,
+                  autoPlayAnimationDuration: const Duration(milliseconds: 600)),
               items: [
                 "https://images.pexels.com/photos/1645840/pexels-photo-1645840.jpeg?auto=compress&cs=tinysrgb&h=350",
                 "https://images.pexels.com/photos/158028/bellingrath-gardens-alabama-landscape-scenic-158028.jpeg?auto=compress&cs=tinysrgb&h=350",
