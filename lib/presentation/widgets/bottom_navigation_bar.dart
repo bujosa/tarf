@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'dart:async';
 import 'package:rive/rive.dart';
+import 'package:tarf/providers/word_provider.dart';
 
-class BottomNavigationBarWidget extends StatelessWidget {
+class BottomNavigationBarWidget extends StatefulWidget {
   const BottomNavigationBarWidget({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<BottomNavigationBarWidget> createState() =>
+      _BottomNavigationBarWidgetState();
+}
+
+class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
+  @override
   Widget build(BuildContext context) {
+    WordProvider wordProvider = Provider.of<WordProvider>(context);
+
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(bottom: 8.0, left: 8, right: 8),
       child: Container(
           padding: const EdgeInsets.only(top: 3, bottom: 8),
           margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -29,7 +39,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.copy, color: Colors.white),
                   onPressed: () {
-                    const data = ClipboardData(text: 'Comida');
+                    final data = ClipboardData(
+                        text: wordProvider.dictionary.getSource());
 
                     Clipboard.setData(data);
 
