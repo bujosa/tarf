@@ -10,14 +10,24 @@ class Dictionary {
       required this.meanings,
       required this.sources});
 
+  static List<String> convert(List<dynamic> list) {
+    List<String> newList = [];
+    for (var item in list) {
+      newList.add(item);
+    }
+
+    return newList;
+  }
+
   factory Dictionary.fromJson(Map<String, dynamic> json) {
     return Dictionary(
-      phonetic: json['phonetic'],
+      phonetic: json['phonetic'] ?? '',
+      // meanings: [],
       phonetics: List<Phonetic>.from(
-          json['phonetics'].map((x) => {Phonetic.fromJson(x)})),
-      meanings: List<Meaning>.from(
-          json['meanings'].map((x) => {Meaning.fromJson(x)})),
-      sources: json['sources'],
+          json['phonetics'].map((x) => Phonetic.fromJson(x))),
+      meanings:
+          List<Meaning>.from(json['meanings'].map((x) => Meaning.fromJson(x))),
+      sources: convert(json['sourceUrls']),
     );
   }
 
@@ -41,22 +51,34 @@ class Dictionary {
     return 'no source found';
   }
 
-  String getAntonims() {
-    String antonims = '';
-
+  String getDefinition() {
     for (var meaning in meanings) {
-      for (var antonym in meaning.antonyms) {
-        antonims += '$antonym, ';
+      for (var definition in meaning.definitions) {
+        if (definition.definition != '') {
+          return definition.definition;
+        }
       }
     }
 
-    if (antonims.isNotEmpty) {
-      antonims = antonims.substring(0, antonims.length - 2);
-    } else {
-      antonims = 'No antonyms found';
+    return 'no definition found';
+  }
+
+  String getAntonyms() {
+    String antonyms = '';
+
+    for (var meaning in meanings) {
+      for (var antonym in meaning.antonyms) {
+        antonyms += '$antonym, ';
+      }
     }
 
-    return antonims;
+    if (antonyms.isNotEmpty) {
+      antonyms = antonyms.substring(0, antonyms.length - 2);
+    } else {
+      antonyms = 'No antonyms found';
+    }
+
+    return antonyms;
   }
 
   String getSynonyms() {
@@ -90,15 +112,11 @@ class Phonetic {
       audio: json['audio'],
     );
   }
-
-  String getAudioUrl() {
-    return audio;
-  }
 }
 
 class Meaning {
   final String partOfSpeech;
-  final List<Definition> definitions;
+  final List<DefinitionWord> definitions;
   final List<String> synonyms;
   final List<String> antonyms;
 
@@ -111,45 +129,49 @@ class Meaning {
   factory Meaning.fromJson(Map<String, dynamic> json) {
     return Meaning(
       partOfSpeech: json['partOfSpeech'],
-      definitions: List<Definition>.from(
-          json['definitions'].map((x) => {Definition.fromJson(x)})),
-      synonyms: json['synonyms'],
-      antonyms: json['antonyms'],
+      definitions: List<DefinitionWord>.from(
+          json['definitions'].map((x) => DefinitionWord.fromJson(x))),
+      synonyms: convert(json['synonyms']),
+      antonyms: convert(json['antonyms']),
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        'partOfSpeech': partOfSpeech,
-        'definitions': definitions.map((x) => x.toJson()).toList(),
-        'synonyms': synonyms,
-        'antonyms': antonyms,
-      };
+  static List<String> convert(List<dynamic> list) {
+    List<String> newList = [];
+    for (var item in list) {
+      newList.add(item);
+    }
+
+    return newList;
+  }
 }
 
-class Definition {
+class DefinitionWord {
   final String definition;
   final String example;
   final List<String> synonyms;
   final List<String> antonyms;
 
-  Definition(
+  DefinitionWord(
       {required this.definition,
       required this.example,
       required this.synonyms,
       required this.antonyms});
 
-  factory Definition.fromJson(Map<String, dynamic> json) {
-    return Definition(
+  factory DefinitionWord.fromJson(Map<String, dynamic> json) {
+    return DefinitionWord(
         definition: json['definition'],
-        example: json['example'],
-        synonyms: json['synonyms'],
-        antonyms: json['antonyms']);
+        example: json['example'] ?? '',
+        synonyms: convert(json['synonyms']),
+        antonyms: convert(json['antonyms']));
   }
 
-  Map<String, dynamic> toJson() => {
-        'definition': definition,
-        'example': example,
-        'synonyms': synonyms,
-        'antonyms': antonyms,
-      };
+  static List<String> convert(List<dynamic> list) {
+    List<String> newList = [];
+    for (var item in list) {
+      newList.add(item);
+    }
+
+    return newList;
+  }
 }
