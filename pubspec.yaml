@@ -35,6 +35,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_easyloading: ^3.0.5
+  http: ^0.13.5
   provider: ^6.0.5
   rive: ^0.10.1
   shared_preferences: ^2.0.17
