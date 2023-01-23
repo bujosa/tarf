@@ -10,6 +10,17 @@ class Dictionary {
       required this.meanings,
       required this.sources});
 
+  factory Dictionary.fromJson(Map<String, dynamic> json) {
+    return Dictionary(
+      phonetic: json['phonetic'] ?? '',
+      phonetics: List<Phonetic>.from(
+          json['phonetics'].map((x) => Phonetic.fromJson(x))),
+      meanings:
+          List<Meaning>.from(json['meanings'].map((x) => Meaning.fromJson(x))),
+      sources: convert(json['sourceUrls']),
+    );
+  }
+
   static List<String> convert(List<dynamic> list) {
     List<String> newList = [];
     for (var item in list) {
@@ -17,18 +28,6 @@ class Dictionary {
     }
 
     return newList;
-  }
-
-  factory Dictionary.fromJson(Map<String, dynamic> json) {
-    return Dictionary(
-      phonetic: json['phonetic'] ?? '',
-      // meanings: [],
-      phonetics: List<Phonetic>.from(
-          json['phonetics'].map((x) => Phonetic.fromJson(x))),
-      meanings:
-          List<Meaning>.from(json['meanings'].map((x) => Meaning.fromJson(x))),
-      sources: convert(json['sourceUrls']),
-    );
   }
 
   get audio {
