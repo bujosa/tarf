@@ -1,6 +1,13 @@
-# tarf
+# Word of the Day
+Tarf is a simple application made in flutter, with the theme of being an app to show the word of the day.
 
-A new Flutter project.
+## Demo
+https://user-images.githubusercontent.com/39348045/213981916-6de775ba-a71e-449e-87bb-38b8e9a692ed.mp4
+
+### Apis
+- Dictionary use [meetDeveloper](https://github.com/meetDeveloper/freeDictionaryAPI)
+- Pictures Api [Pexels](https://www.pexels.com/)
+- Word Api [Random Word Api](https://random-word-api.herokuapp.com/home)
 
 ## Getting Started
 
