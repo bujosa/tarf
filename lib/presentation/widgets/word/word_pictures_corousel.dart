@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tarf/providers/word_provider.dart';
 
-class WordPictures extends StatefulWidget {
-  const WordPictures({Key? key}) : super(key: key);
+class WordPicturesCorousel extends StatefulWidget {
+  const WordPicturesCorousel({Key? key}) : super(key: key);
 
   @override
-  State<WordPictures> createState() => _WordPicturesState();
+  State<WordPicturesCorousel> createState() => _WordPicturesCorouselState();
 }
 
-class _WordPicturesState extends State<WordPictures> {
+class _WordPicturesCorouselState extends State<WordPicturesCorousel> {
   @override
   Widget build(BuildContext context) {
     final wordProvider = Provider.of<WordProvider>(context);

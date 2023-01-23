@@ -31,14 +31,14 @@ class Dictionary {
     );
   }
 
-  String getAudio() {
+  get audio {
     for (var phonetic in phonetics) {
       if (phonetic.audio != '') {
         return phonetic.audio;
       }
     }
 
-    return 'no audio found';
+    return '';
   }
 
   String getSource() {
@@ -63,7 +63,7 @@ class Dictionary {
     return 'no definition found';
   }
 
-  String getAntonyms() {
+  get antonyms {
     String antonyms = '';
 
     for (var meaning in meanings) {
@@ -74,8 +74,6 @@ class Dictionary {
 
     if (antonyms.isNotEmpty) {
       antonyms = antonyms.substring(0, antonyms.length - 2);
-    } else {
-      antonyms = 'No antonyms found';
     }
 
     return antonyms;
