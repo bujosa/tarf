@@ -34,6 +34,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.0.2
   flutter_easyloading: ^3.0.5
   http: ^0.13.5
   provider: ^6.0.5
@@ -58,6 +59,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/rive/
+    - .env
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see
