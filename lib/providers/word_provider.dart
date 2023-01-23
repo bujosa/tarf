@@ -14,12 +14,26 @@ class WordProvider extends ChangeNotifier {
   bool isLoaded = false;
   String word = '';
   List<String> pictures = [];
-  late Dictionary dictionary;
+  Dictionary dictionary = Dictionary(
+    phonetics: [],
+    meanings: [
+      Meaning(partOfSpeech: 'Not Found', definitions: [
+        DefinitionWord(
+          definition: 'Not Found',
+          antonyms: [],
+          example: '',
+          synonyms: [],
+        )
+      ], antonyms: [], synonyms: [])
+    ],
+    phonetic: '',
+    sources: [],
+  );
 
-  String dictionaryApi = dotenv.env['DICTIONARY_API']!;
-  String pictureApi = dotenv.env['PICTURE_API']!;
-  String wordApi = dotenv.env['WORD_API']!;
-  String pictureApiToken = dotenv.env['PICTURE_API_TOKEN']!;
+  final String _dictionaryApi = dotenv.env['DICTIONARY_API']!;
+  final String _pictureApi = dotenv.env['PICTURE_API']!;
+  final String _wordApi = dotenv.env['WORD_API']!;
+  final String _pictureApiToken = dotenv.env['PICTURE_API_TOKEN']!;
 
   WordProvider() {
     _loadWord();
@@ -29,16 +43,13 @@ class WordProvider extends ChangeNotifier {
     prefs = await SharedPreferences.getInstance();
     String? today = prefs.getString('today_key');
 
-    // if (true) {
     if (today == null || today != this.today) {
       word = (await fetchWord()).body.split('"')[1];
       word = word[0].toUpperCase() + word.substring(1);
       await prefs.setString('word_key', word);
-      prefs.setString('today_key', this.today);
+      await prefs.setString('today_key', this.today);
 
       fetchPictures();
-
-      await prefs.setStringList('pictures_key', pictures);
     } else {
       word = prefs.getString('word_key')!;
       pictures = prefs.getStringList('pictures_key')!;
@@ -55,43 +66,29 @@ class WordProvider extends ChangeNotifier {
     Random random = Random();
     int randomNumber = random.nextInt(8) + 1;
 
-    return http.get(Uri.parse('$wordApi?length=$randomNumber'));
+    return http.get(Uri.parse('$_wordApi?length=$randomNumber'));
   }
 
   void fetchDictionary() async {
     late Future<http.Response> response =
-        http.get(Uri.parse('$dictionaryApi${word.toLowerCase()}'));
+        http.get(Uri.parse('$_dictionaryApi${word.toLowerCase()}'));
 
     await response.then((value) {
-      var jsonResponse = jsonDecode(value.body) as Map<String, dynamic>;
+      var jsonResponse = jsonDecode(value.body);
 
-      if (jsonResponse['title'] == null) {
-        dictionary = Dictionary.fromJson(jsonResponse);
-      } else {
-        dictionary = Dictionary(
-          phonetics: [],
-          meanings: [
-            Meaning(partOfSpeech: 'Not Found', definitions: [
-              Definition(
-                definition: 'Not Found',
-                antonyms: [],
-                example: '',
-                synonyms: [],
-              )
-            ], antonyms: [], synonyms: [])
-          ],
-          phonetic: '',
-          sources: [],
-        );
+      if (jsonResponse[0]['title'] == null) {
+        dictionary = Dictionary.fromJson(jsonResponse[0]);
       }
     });
+
+    notifyListeners();
   }
 
   void fetchPictures() async {
     late Future<http.Response> response = http.get(
-        Uri.parse('$pictureApi${word.toLowerCase()}&per_page=5'),
+        Uri.parse('$_pictureApi${word.toLowerCase()}&per_page=5'),
         headers: {
-          'Authorization': pictureApiToken,
+          'Authorization': _pictureApiToken,
         });
 
     await response.then((value) {
@@ -101,6 +98,7 @@ class WordProvider extends ChangeNotifier {
       }
     });
 
+    await prefs.setStringList('pictures_key', pictures);
     notifyListeners();
   }
 
